@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silly Story Generator</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: #fffbe7;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #d9534f;
+    }
+    input, button {
+      padding: 8px 12px;
+      margin: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    button {
+      background-color: #f0ad4e;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ec971f;
+    }
+    #story {
+      background: #fdf2d0;
+      color: #5a3d00;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      display: none;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>🤣 Random Silly Story Maker</h1>
+  <p>Wanna see something ridiculous? Enter your name (or leave blank for ‘Bob’):</p>
+  <input type="text" id="nameInput" placeholder="Your name">
+  
+  <p>
+    <label><input type="radio" name="units" id="us" checked> US Units</label>
+    <label><input type="radio" name="units" id="uk"> UK Units</label>
+  </p>
+  
+  <button id="generateBtn">Make Me Laugh</button>
+
+  <div id="story"></div>
+
+  <script>
+    const nameField = document.getElementById('nameInput');
+    const storyBox = document.getElementById('story');
+    const btn = document.getElementById('generateBtn');
+
+    const characters = ["Captain Noodle", "Grandma Laser-Eyes", "Sir Spaghetti Pants", "The Invisible Hamster"];
+    const places = ["the haunted ice cream truck", "a disco in the desert", "your neighbour’s fridge", "the International Potato Museum"];
+    const events = ["sneezed glitter everywhere", "started yodeling at a squirrel", "did the worm for 3 hours straight", "accidentally adopted 12 penguins"];
+
+    let baseStory = "It was 94°F outside, so :char: went to :place:. Without warning, they :event:. :name: saw it all and just kept eating their sandwich.";
+
+    function randomPick(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    btn.addEventListener('click', () => {
+      let silly = baseStory;
+      silly = silly.replace(":char:", randomPick(characters));
+      silly = silly.replace(":place:", randomPick(places));
+      silly = silly.replace(":event:", randomPick(events));
+
+      let userName = nameField.value.trim() || "Bob";
+      silly = silly.replace(":name:", userName);
+
+      if (document.getElementById('uk').checked) {
+        let temp = Math.round((94 - 32) * 5 / 9) + "°C";
+        silly = silly.replace("94°F", temp);
+      }
+
+      storyBox.textContent = silly;
+      storyBox.style.display = "block";
+    });
+  </script>
+</body>
+</html>
